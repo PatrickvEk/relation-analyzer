@@ -31,7 +31,7 @@ public class AnalyzeRelationModel {
 	}
 
 	public boolean isNoCache() {
-		return noCache;
+		return true; // always no cache, so I don't need a database
 	}
 
 	public void setNoCache(boolean noCache) {
