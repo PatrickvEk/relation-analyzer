@@ -2,6 +2,8 @@ package org.osmsurround.ra;
 
 import javax.validation.Valid;
 
+
+import org.osmsurround.ra.analyzer.AnalyzeRelationService;
 import org.osmsurround.ra.analyzer.AnalyzerService;
 import org.osmsurround.ra.stats.RelationStatistics;
 import org.osmsurround.ra.stats.StatisticsService;
@@ -16,28 +18,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.osmsurround.ra.report.Report;
 
 @Controller
-@RequestMapping("/gapchecker")
-public class GapCheckerController {
+@RequestMapping("/gapAnalyser")
+public class GapAnalyserController {
 
 	@Autowired
 	private StatisticsService statisticsService;
 	@Autowired
-	private AnalyzerService analyzerService;
+	private AnalyzeRelationService analyzeRelationService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody
 	Report get(@Valid AnalyzeRelationModel analyzeRelationModel, Errors errors) {
 		try {
 				if (analyzeRelationModel.getRelationId() != null) {
-					return analyzerService.analyzeRelation(analyzeRelationModel.getRelationId(), true);
+					return analyzeRelationService.analyzeRelation(analyzeRelationModel);
 				}
-
-				return null;
-			}
 		}
 		catch (RelationGoneException e) {
 		}
 		return null;
 	}
-
 }
